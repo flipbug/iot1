@@ -23,6 +23,15 @@ LED_INSTANCE = "5550"
 # This code turns on a LED on LED_CLIENT as soon as
 # ROTARY_CLIENT's rotary sensor exceeds 50% (>= 512).
 
+# Notes Pacassi (2):
+# Yes, there is CoAP / LWM2M traffic. We can see the Leshan server
+# communicating with the Raspberry Pi through CoAP.
+# The payload contains the OMA-Object ID, Instance number on server and Attribute-ID and looks e.g. like this:
+# /3201/0/5550
+#
+# The payload also contains the method of the CoAP request
+# (e.g. GET our PUT).
+
 
 # Add additional IoT client names here if needed
 # ################################################
