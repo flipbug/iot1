@@ -12,7 +12,7 @@ from time import sleep
 LESHAN_SERVER_IP = "172.16.32.5"
 LESHAN_SERVER_PORT = "8080"
 
-CLIENT_1_NAME = "iot-pi-right-back"
+CLIENT_1_NAME = "iot-pi-right-front"
 CLIENT_2_NAME = "iot-pi-left-front"
 
 # Add additional IoT client names here if needed
