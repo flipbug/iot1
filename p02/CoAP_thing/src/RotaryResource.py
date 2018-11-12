@@ -82,7 +82,7 @@ class RotaryResource( Sensor ):
     self.potentiometer = connector
     self.actuator_uris = [ "coap://localhost:5683/actuators/led0",
                            "coap://172.16.32.81:5683/actuators/led0" ] # sjossi
-    #self.actuator_uris = [ "coap://localhost:5683/actuators/led0"]
+    self.actuator_uris = [ "coap://localhost:5683/actuators/led0"]
 
     self.poll_sensor()
 

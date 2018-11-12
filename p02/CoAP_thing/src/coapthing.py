@@ -65,8 +65,8 @@ from TimeResource import TimeResource
 from RotaryResource import RotaryResource
 
 # connected hardware
-LED0_PIN    = int( 5 )
-BUTTON0_PIN = int( 3 )
+LED0_PIN    = int( 3 )
+BUTTON0_PIN = int( 2 )
 ROTARY0_PIN = int( 0 )
 
 GENERAL_AIOCOAP_LOGGER_NAME = "coap-server"
