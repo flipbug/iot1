@@ -12,7 +12,7 @@ def on_message(client, userdata, msg):
 
 class Controller:
 
-    TRIGGER_TIMEOUT = 30
+    TRIGGER_ALARM_DELAY = 30
 
     def __init__(self):
         self.client = mqtt.Client()
@@ -61,8 +61,8 @@ class Controller:
             event = Event.motion_detected
             self.client.publish('megasec/camera/make_picture', payload="test")
 
-            # Start timer after wich the alarm will be triggered if not deactivated first.
-            threading.Timer(self.TRIGGER_TIMEOUT, self.tigger_timeout).start()
+            # Start timer after which the alarm will be triggered if not deactivated first.
+            threading.Timer(self.TRIGGER_ALARM_DELAY, self.tigger_timeout).start()
 
             print("Event: " + str(event))
             return event
