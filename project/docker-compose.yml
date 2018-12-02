@@ -21,6 +21,8 @@ services:
       - megasec
     env_file:
       - development.env
+    depends_on:
+      - broker
 
   motionsensor:
     build: motionsensor/

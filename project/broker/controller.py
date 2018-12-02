@@ -29,13 +29,11 @@ class Controller:
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected to megasec broker: " + str(rc))
-        self.client.subscribe('megasec/+')
+        self.client.subscribe('megasec/#')
 
     def on_message(self, client, userdata, msg):
         print("Message received: " + msg.topic)
         event = None
-
-        # import ipdb; ipdb.set_trace()
 
         if msg.topic == 'megasec/toggleswitch':
             event = self.handle_toggleswitch(msg)
@@ -61,7 +59,7 @@ class Controller:
     def handle_motionsensor(self, msg):
         if isinstance(self.current_state, ActiveState) and msg.payload == b'motion detected':
             event = Event.motion_detected
-            self.client.publish('megasec/camera/make_picture')
+            self.client.publish('megasec/camera/make_picture', payload="test")
 
             # Start timer after wich the alarm will be triggered if not deactivated first.
             threading.Timer(self.TRIGGER_TIMEOUT, self.tigger_timeout).start()
@@ -71,7 +69,6 @@ class Controller:
 
     def handle_camera(self, msg):
         print("Picture received")
-        self.on_message()
 
     def tigger_timeout(self):
         print("Trigger timeout received")

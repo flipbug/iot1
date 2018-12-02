@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to megasec broker: " + str(rc))
-    client.subscribe('megasec/+')
+    client.subscribe('#')
 
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
