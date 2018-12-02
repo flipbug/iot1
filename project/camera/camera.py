@@ -1,19 +1,28 @@
 import os
 import paho.mqtt.client as mqtt
 
-def on_connect(client, userdata, flags, rc):
-    print("Connected to megasec broker: " + str(rc))
-    client.subscribe('megasec/camera/make_picture')
 
-def on_message(client, userdata, msg):
-    print("send picture")
-    client.publish('megasec/camera/send_picture', payload="binary string")
+class Camera:
+    def __init__(self):
+        self.client = mqtt.Client()
+        self.client.on_connect = self.on_connect
+        self.client.on_message = self.on_message
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
+    def run(self):
+        mqtt_broker_ip = os.environ['MQTT_BROKER_IP']
 
-mqtt_broker_ip = os.environ['MQTT_BROKER_IP']
-client.connect(mqtt_broker_ip, 1883, 60)
+        self.client.connect(mqtt_broker_ip, 1883, 60)
+        self.client.loop_forever()
 
-client.loop_forever()
+    def on_connect(self, client, userdata, flags, rc):
+        print("Connected to megasec broker: " + str(rc))
+        self.client.subscribe('megasec/camera/make_picture')
+
+    def on_message(self, client, userdata, msg):
+        print("send picture")
+        self.client.publish('megasec/camera/send_picture', payload="binary string")
+
+
+if __name__ == "__main__":
+    camera = Camera()
+    camera.run()

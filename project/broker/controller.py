@@ -6,10 +6,6 @@ from events import Event
 from states import *
 
 
-def on_message(client, userdata, msg):
-    print(msg.topic+" "+str(msg.payload))
-
-
 class Controller:
 
     TRIGGER_ALARM_DELAY = 30

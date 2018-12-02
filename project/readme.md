@@ -18,19 +18,22 @@ Monitor traffic:
 docker-compose exec broker python monitor.py 
 ```
 
-Activate/deactivate:
+Activate/deactivate surveillance system:
 ```
 docker-compose run toggleswitch python toggleswitch.py 
 ```
 
-Trigger motion detection:
+Trigger motion sensor:
 ```
 docker-compose run motionsensor python motionsensor.py 
 ```
 
 ## Architecture
 
-insert fancy diagram
+### State Diagram
+
+The application uses a simple state machine to keep track of the state.
+![state diagram](docs/images/statediagram.png)
 
 ## Hardware
 
@@ -39,7 +42,7 @@ insert fancy diagram
 * 1x camera
 * 1x motiondetector
 
-## Project Deliverables:
+## Project Deliverables
 
 Presuming most laboratories are done in groups there will be an “abnahme” of about 10’ demonstration demonstrating an application-based awareness of system characteristics, including, but not necessarily limited to:
 
