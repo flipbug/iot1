@@ -10,8 +10,26 @@ services:
       - ./broker:/usr/src/app
     ports:
       - "1883:1883"
-    environment:
-      - MQTT_BROKER_IP=172.28.1.1
+    env_file:
+      - development.env
+
+  camera:
+    build: camera/
+    volumes:
+      - ./camera:/usr/src/app
+    networks:
+      - megasec
+    env_file:
+      - development.env
+
+  motionsensor:
+    build: motionsensor/
+    volumes:
+      - ./motionsensor:/usr/src/app
+    networks:
+      - megasec
+    env_file:
+      - development.env
 
   toggleswitch:
     build: toggleswitch/
@@ -19,8 +37,8 @@ services:
       - ./toggleswitch:/usr/src/app
     networks:
       - megasec
-    environment:
-      - MQTT_BROKER_IP=172.28.1.1      
+    env_file:
+      - development.env
 
 networks:
   megasec:

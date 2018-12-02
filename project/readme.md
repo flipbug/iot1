@@ -8,14 +8,24 @@ This application implements a distributed home surveillance system using MQTT.
 
 Each node is available as a docker container for easier development and testing. Start by running `docker-compose up`.
 
-Use the toggle switch:
+Start the controller:
 ```
-docker-compose run toggleswitch python toggleswitch.py 
+docker-compose exec broker python controller.py 
 ```
 
 Monitor traffic:
 ```
 docker-compose exec broker python monitor.py 
+```
+
+Activate/deactivate:
+```
+docker-compose run toggleswitch python toggleswitch.py 
+```
+
+Trigger motion detection:
+```
+docker-compose run motionsensor python motionsensor.py 
 ```
 
 ## Architecture
