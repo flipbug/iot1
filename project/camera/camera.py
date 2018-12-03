@@ -1,7 +1,14 @@
 import os
 import paho.mqtt.client as mqtt
-import picamera
 from PIL import Image
+from dotenv import load_dotenv
+
+HAS_CAMERA = True
+
+try:
+  import picamera
+except OSError:
+  HAS_CAMERA = False
 
 class Camera:
     def __init__(self):
@@ -39,9 +46,12 @@ class Camera:
 
 
 if __name__ == "__main__":
-    camera = Camera()
+    load_dotenv()
 
-    if os.environ.get('MQTT_BROKER_IP') is not None:
-        camera.run()
-    else:
-        camera.devRun()
+    if HAS_CAMERA:
+        camera = Camera()
+
+        if os.environ.get('MQTT_BROKER_IP') is not None:
+            camera.run()
+        else:
+            camera.devRun()
