@@ -58,6 +58,7 @@ class Camera:
 
     def on_message(self, client, userdata, msg):
         print("send picture")
+        self.devRun()
         self.client.publish('megasec/camera/send_picture', payload="binary string")
 
 
