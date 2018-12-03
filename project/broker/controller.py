@@ -70,7 +70,11 @@ class Controller:
         print("Trigger timeout received")
         self.current_state = self.current_state.on_event(Event.timeout)
 
+        if isinstance(self.current_state, AlarmState):
+            print("Send alarm")
+            self.client.publish('megasec/alarm', payload="active")
 
+ 
 if __name__ == "__main__":
     controller = Controller()
     controller.run()
