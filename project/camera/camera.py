@@ -1,6 +1,6 @@
 import os
 import paho.mqtt.client as mqtt
-
+import picamera
 
 class Camera:
     def __init__(self):
@@ -14,6 +14,13 @@ class Camera:
         self.client.connect(mqtt_broker_ip, 1883, 60)
         self.client.loop_forever()
 
+    def devRun(self):
+        # Only use the camera resources when needed and don't
+        # block it for other scripts.
+        with picamera.PiCamera() as camera:
+            camera.resolution = (1280, 720)
+            camera.capture("/home/pi/iot1/project/resources/image.jpg")
+
     def on_connect(self, client, userdata, flags, rc):
         print("Connected to megasec broker: " + str(rc))
         self.client.subscribe('megasec/camera/make_picture')
@@ -25,4 +32,8 @@ class Camera:
 
 if __name__ == "__main__":
     camera = Camera()
-    camera.run()
+
+    if os.environ.get('MQTT_BROKER_IP') is not None:
+        camera.run()
+    else:
+        camera.devRun()
