@@ -1,12 +1,19 @@
 import os
 import paho.mqtt.client as mqtt
 import picamera
+from PIL import Image
 
 class Camera:
     def __init__(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        self.image_file = "/home/pi/iot1/project/resources/image.jpg"
+
+    def rotate(self):
+        image_object = Image.open(self.image_file)
+        image_object = image_object.rotate(180)
+        image_object.save(self.image_file)
 
     def run(self):
         mqtt_broker_ip = os.environ['MQTT_BROKER_IP']
@@ -19,7 +26,8 @@ class Camera:
         # block it for other scripts.
         with picamera.PiCamera() as camera:
             camera.resolution = (1280, 720)
-            camera.capture("/home/pi/iot1/project/resources/image.jpg")
+            camera.capture(self.image_file)
+            self.rotate()
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected to megasec broker: " + str(rc))
