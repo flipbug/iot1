@@ -20,7 +20,7 @@ docker-compose exec broker python monitor.py
 
 Activate/deactivate surveillance system:
 ```
-docker-compose run toggleswitch python toggleswitch.py 
+docker-compose exec toggleswitch touch VIRTUAL_BUTTON 
 ```
 
 Trigger motion sensor:
