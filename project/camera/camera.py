@@ -35,7 +35,7 @@ class Camera:
     def upload(self):
         s3 = boto3.resource('s3')
         data = open(self.image_file, 'rb')
-        s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='image.jpg', Body=data)
+        s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='image.jpg', Body=data, ACL='public-read')
 
 
     def devRun(self):
