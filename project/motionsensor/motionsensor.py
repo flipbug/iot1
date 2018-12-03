@@ -16,7 +16,7 @@ while(True):
             print("Motion detected. Sensor disarmed")
             single('megasec/motionsensor', payload='motion detected', hostname=host)
             armed = 0
-        if (grovepi.digitalRead(pir) == 0):
+        if (grovepi.digitalRead(pir) == 0 and armed == 0):
             print("No more motion. Sensor armed again")
             armed = 1
     except IOError:
