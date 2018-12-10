@@ -92,6 +92,11 @@ a {
   transition: all 0.3s ease-in-out 0s;
 }
 
+a#image-link {
+  cursor: zoom-in;
+  outline: 0;
+}
+
 a:hover {
   border-bottom-color: #ff0000;
 }
