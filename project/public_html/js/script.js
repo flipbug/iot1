@@ -25,5 +25,24 @@ $(document).ready(function($) {
     $imgLink.attr('href', newLink);
 
     return false;
-  })
+  });
+
+  // Refresh image.
+
+  function updateImageSrc() {
+    var src = $img.attr('src').split('?')[0];
+    src += '?' + new Date().getTime();
+
+    $img.attr('src', src);
+  }
+
+  function imageSrcWorker() {
+    updateImageSrc();
+
+    window.setTimeout(function() {
+      imageSrcWorker();
+    }, 1000);
+  }
+
+  imageSrcWorker();
 });
