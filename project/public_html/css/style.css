@@ -75,19 +75,31 @@ img {
   width: 100%;
 }
 
-ul {
-  list-style-position: outside;
-  margin-left: 1rem;
-  margin-top: 1rem;
+.pager ul {
+  list-style-type: none;
+  margin-top: 0.5rem;
 }
 
-li + li {
-  margin-top: 0.25rem;
+.pager li {
+  display: inline-block;
+}
+
+.pager a {
+  background-color: #f00000;
+  border: solid 1px #f00000;
+  color: #ffffff;
+  display: block;
+  padding: 0.5rem;
+}
+
+.pager a:hover {
+  background-color: #ffffff;
+  color: #f00000;
 }
 
 a {
   border-bottom: solid 1px transparent;
-  color: #ff0000;
+  color: #f00000;
   text-decoration: none;
   transition: all 0.3s ease-in-out 0s;
 }
@@ -98,7 +110,7 @@ a#image-link {
 }
 
 a:hover {
-  border-bottom-color: #ff0000;
+  border-bottom-color: #f00000;
 }
 
 @media screen and (max-width: 72rem) {
