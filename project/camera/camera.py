@@ -55,8 +55,10 @@ class Camera:
         img.paste(button_img, (self.image_width - text_size[0] - padding * 2, self.image_height - text_size[1] - padding))
         img.save(self.snapshot_file)
 
-        # Upload snapshot.
+        # Upload capture and snapshot.
         s3 = boto3.resource('s3')
+        data = open(self.capture_file, 'rb')
+        s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='capture.jpg', Body=data, ACL='public-read')
         data = open(self.snapshot_file, 'rb')
         s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='snapshot.png', Body=data, ACL='public-read')
 
