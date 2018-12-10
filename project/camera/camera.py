@@ -1,8 +1,11 @@
 import os
 import paho.mqtt.client as mqtt
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 from dotenv import load_dotenv
 import boto3
+from datetime import datetime
 
 HAS_CAMERA = True
 
@@ -16,16 +19,20 @@ class Camera:
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
-        self.image_file = "/home/pi/iot1/project/resources/image.jpg"
+        self.image_width = 1280
+        self.image_height = 720
+        self.capture_file = "/home/pi/iot1/project/resources/capture.jpg"
+        self.snapshot_file = "/home/pi/iot1/project/resources/snapshot.png"
 
         if not HAS_CAMERA:
-            self.image_file = "/Users/dpacassi/ZHAW/iot1/project/resources/image.jpg"
+            self.capture_file = "/Users/dpacassi/ZHAW/iot1/project/resources/capture.jpg"
+            self.snapshot_file = "/Users/dpacassi/ZHAW/iot1/project/resources/snapshot.png"
 
     # Rotate the image and save it as file.
     def rotate(self):
-        image_object = Image.open(self.image_file)
+        image_object = Image.open(self.capture_file)
         image_object = image_object.rotate(180)
-        image_object.save(self.image_file)
+        image_object.save(self.capture_file)
 
     # Connect to the MQTT broker.
     def connect(self):
@@ -34,11 +41,24 @@ class Camera:
         self.client.connect(mqtt_broker_ip, 1883, 60)
         self.client.loop_forever()
 
-    # Upload our image to S3.
+    # Create and upload our snapshot to S3.
     def upload(self):
+        # Prepare snapshot.
+        padding = 8
+        text = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        img = Image.open(self.capture_file)
+        font = ImageFont.truetype("RobotoMono-Regular.ttf", 24)
+        text_size = font.getsize(text)
+        button_img = Image.new('RGBA', (text_size[0] + padding * 2, text_size[1] + padding), "black")
+        button_draw = ImageDraw.Draw(button_img)
+        button_draw.text((padding, 0), text, (0, 255, 0), font=font)
+        img.paste(button_img, (self.image_width - text_size[0] - padding * 2, self.image_height - text_size[1] - padding))
+        img.save(self.snapshot_file)
+
+        # Upload snapshot.
         s3 = boto3.resource('s3')
-        data = open(self.image_file, 'rb')
-        s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='image.jpg', Body=data, ACL='public-read')
+        data = open(self.snapshot_file, 'rb')
+        s3.Bucket(os.environ['S3_BUCKET']).put_object(Key='snapshot.png', Body=data, ACL='public-read')
 
     # Capture an image.
     def capture_image(self):
@@ -46,8 +66,8 @@ class Camera:
         # block it for other scripts.
         with picamera.PiCamera() as camera:
             # Capture image.
-            camera.resolution = (1280, 720)
-            camera.capture(self.image_file)
+            camera.resolution = (self.image_width, self.image_height)
+            camera.capture(self.capture_file)
 
             # Rotate image.
             self.rotate()
