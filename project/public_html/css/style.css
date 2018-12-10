@@ -76,19 +76,31 @@ img {
 }
 
 .pager ul {
+  display: flex;
   list-style-type: none;
   margin-top: 0.5rem;
+  width: 100%;
 }
 
 .pager li {
   display: inline-block;
+  flex: 33.333333%;
+  max-width: 33.333333%;
+}
+
+.pager li:nth-child(2) {
+  text-align: center;
+}
+
+.pager li:nth-child(3) {
+  text-align: right;
 }
 
 .pager a {
   background-color: #f00000;
   border: solid 1px #f00000;
   color: #ffffff;
-  display: block;
+  display: inline-block;
   padding: 0.5rem;
 }
 
@@ -116,5 +128,27 @@ a:hover {
 @media screen and (max-width: 72rem) {
   .section__inner {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 32rem) {
+  .pager ul {
+    display: block;
+  }
+
+  .pager li {
+    display: block;
+    flex: 100%;
+    max-width: 100%;
+    text-align: left !important;
+    width: 100%;
+  }
+
+  .pager li + li {
+    margin-top: 0.5rem;
+  }
+
+  .pager a {
+    display: block;
   }
 }
