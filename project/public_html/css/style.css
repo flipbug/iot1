@@ -1,0 +1,47 @@
+html {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+body {
+  background-color: #2f3033;
+  padding: 1rem 1rem;
+}
+
+section {
+  background-color: #f7f7f7;
+  margin: 0 auto;
+  max-width: 80rem;
+  padding: 1rem 0 0;
+  text-align: center;
+}
+
+footer section {
+  padding-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 50%;
+}
+
+@media screen and (max-width: 72rem) {
+  img {
+    width: 100%;
+  }
+}
