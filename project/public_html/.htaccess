@@ -1,6 +1,4 @@
-<Files .htpasswd>
-  AuthName "Please log in"
-  AuthType Basic
-  AuthUserFile /var/www/pacassi.ch/public_html/iot1/.htpasswd
-  Require valid-user
-</Files>
+AuthName "Please log in"
+AuthType Basic
+AuthUserFile /var/www/pacassi.ch/public_html/iot1/.htpasswd
+Require valid-user
