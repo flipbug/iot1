@@ -23,10 +23,12 @@ class Camera:
         self.image_height = 720
         self.capture_file = "/home/pi/iot1/project/resources/capture.jpg"
         self.snapshot_file = "/home/pi/iot1/project/resources/snapshot.png"
+        self.ttf_file = "/home/pi/iot1/project/camera/RobotoMono-Regular.ttf"
 
         if not HAS_CAMERA:
             self.capture_file = "/Users/dpacassi/ZHAW/iot1/project/resources/capture.jpg"
             self.snapshot_file = "/Users/dpacassi/ZHAW/iot1/project/resources/snapshot.png"
+            self.ttf_file = "/Users/dpacassi/ZHAW/iot1/project/camera/RobotoMono-Regular.ttf"
 
     # Rotate the image and save it as file.
     def rotate(self):
@@ -47,7 +49,7 @@ class Camera:
         padding = 8
         text = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         img = Image.open(self.capture_file)
-        font = ImageFont.truetype("RobotoMono-Regular.ttf", 24)
+        font = ImageFont.truetype(self.ttf_file, 24)
         text_size = font.getsize(text)
         button_img = Image.new('RGBA', (text_size[0] + padding * 2, text_size[1] + padding), "black")
         button_draw = ImageDraw.Draw(button_img)
@@ -84,7 +86,7 @@ class Camera:
 
     # on_message(): Actions to process when a message has been published to our subscribed topic.
     def on_message(self, client, userdata, msg):
-        print("Capture image")
+        print("Capture image, timestamp: " + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         self.capture_image()
         self.client.publish('megasec/camera/send_picture', payload="binary string")
 
