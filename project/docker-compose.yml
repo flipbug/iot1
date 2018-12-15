@@ -8,6 +8,8 @@ services:
         ipv4_address: 172.28.1.1
     volumes:
       - ./broker:/usr/src/app
+      - ./tls:/etc/mosquitto/certs
+      - ./tls:/etc/ssl/certs
     ports:
       - "1883:1883"
     env_file:
@@ -17,6 +19,7 @@ services:
     build: camera/
     volumes:
       - ./camera:/usr/src/app
+      - ./tls:/etc/ssl/certs
     networks:
       - megasec
     env_file:
@@ -28,6 +31,7 @@ services:
     build: motionsensor/
     volumes:
       - ./motionsensor:/usr/src/app
+      - ./tls:/etc/ssl/certs
     networks:
       - megasec
     env_file:
@@ -37,6 +41,7 @@ services:
     build: toggleswitch/
     volumes:
       - ./toggleswitch:/usr/src/app
+      - ./tls:/etc/ssl/certs
     networks:
       - megasec
     env_file:

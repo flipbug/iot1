@@ -42,6 +42,22 @@ The application uses a simple state machine to keep track of the state.
 * 1x camera
 * 1x motiondetector
 
+## TLS Configuration
+
+*Please Note:* The keys and certificates found in this repository are only to be used in a test environment. 
+
+### Setup
+
+To generate the certificates, simply run the `tls/generate_tls_material.sh` script. 
+
+#### Broker
+
+Copy the server.crt and server.key to `/etc/mosquitto/certs` and the ca.crt to `/etc/mosquitto/ca_certificates`.
+
+#### Client
+
+Copy the ca.crt to `/etc/ssl/certs`.
+
 ## Project Deliverables
 
 Presuming most laboratories are done in groups there will be an “abnahme” of about 10’ demonstration demonstrating an application-based awareness of system characteristics, including, but not necessarily limited to:
