@@ -7,6 +7,9 @@ from virtual_button import VirtualButton
 class ToggleSwitch:
     def __init__(self):
         self.mqtt_broker_ip = os.environ['MQTT_BROKER_IP']
+        self.tls_conf = {"ca_certs": "/etc/ssl/certs/ca.crt"}
+        self.tls_conf = None
+
         self.init_button()
 
     def init_button(self):
@@ -29,7 +32,11 @@ class ToggleSwitch:
                 button_press = False
 
     def send_message(self):
-        single('megasec/toggleswitch', payload='pressed', hostname=self.mqtt_broker_ip)
+        single('megasec/toggleswitch', 
+        payload='pressed', 
+        hostname=self.mqtt_broker_ip,
+        port=1883,
+        tls=self.tls_conf)
    
 
 if __name__ == "__main__":

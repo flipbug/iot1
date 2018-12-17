@@ -8,12 +8,13 @@ from states import *
 
 class Controller:
 
-    TRIGGER_ALARM_DELAY = 30
+    TRIGGER_ALARM_DELAY = 10
 
     def __init__(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        # self.client.tls_set(ca_certs="/etc/ssl/certs/ca.crt", tls_version=2)
 
         self.current_state = SleepState()
 
@@ -42,13 +43,18 @@ class Controller:
             self.handle_camera(msg)
 
         self.current_state = self.current_state.on_event(event)
+        self.client.publish('megasec/state', payload=str(self.current_state))
 
     def handle_toggleswitch(self, msg):
         if isinstance(self.current_state, SleepState):
             event = Event.activate
         else:
             event = Event.deactivate
-        
+
+            if isinstance(self.current_state, AlarmState):
+                print("Disarm alarm")
+                self.client.publish('megasec/alarm', payload="inactive")
+
         print("Event: " + str(event))
         return event
 
