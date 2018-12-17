@@ -41,6 +41,8 @@ The application uses a simple state machine to keep track of the state.
 * 1x button
 * 1x camera
 * 1x motiondetector
+* 1x led
+* 1x buzzer
 
 ## TLS Configuration
 
