@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD mosquitto -c /etc/mosquitto/mosquitto.conf &&  python controller.py
+CMD mosquitto -c /etc/mosquitto/mosquitto.conf
